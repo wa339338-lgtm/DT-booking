@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beijing World Youth Academy DT Wooden Workshop Booking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0D2B1A;
+            --primary-deep: #081A10;
+            --primary-rich: #1A3D2B;
+            --accent: #00704A;
+            --accent-light: #009B6A;
+            --gold: #C9A962;
+            --gold-light: #D4B978;
+            --cream: #F5F3EE;
+            --cream-warm: #EDE9E0;
+            --white: #FFFFFF;
+            --text: #1A1A1A;
+            --text-light: #5C665C;
+            --border: #D4D0C8;
+            --shadow: rgba(13, 43, 26, 0.12);
+            --shadow-deep: rgba(13, 43, 26, 0.25);
+            --middle: #2E7D32;
+            --middle-light: #E8F5E9;
+            --high: #1565C0;
+            --high-light: #E3F2FD;
+            --conflict: #C62828;
+            --conflict-light: #FFEBEE;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(180deg, var(--primary-deep) 0%, var(--primary) 50%, var(--primary-rich) 100%);
+            padding: 0 3rem;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            box-shadow: 0 4px 30px var(--shadow-deep);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-emblem {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .logo-emblem img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: var(--white);
+        }
+
+        .logo-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            font-size: 0.7rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(255,255,255,0.08);
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .user-badge .name {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .user-badge .role {
+            background: var(--gold);
+            color: var(--primary-deep);
+            padding: 0.2rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.25);
+            color: var(--white);
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        .export-btn {
+            background: var(--gold);
+            border: none;
+            color: var(--primary-deep);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .export-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+        }
+
+        /* Export Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            width: 400px;
+            max-width: 90%;
+        }
+
+        .modal h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .modal-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .modal-option {
+            padding: 1rem;
+            background: var(--cream);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: inherit;
+            text-align: left;
+            transition: all 0.15s;
+        }
+
+        .modal-option:hover {
+            border-color: var(--accent);
+            background: var(--white);
+        }
+
+        .modal-option strong {
+            display: block;
+            margin-bottom: 0.25rem;
+            color: var(--primary);
+        }
+
+        .modal-option small {
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        .modal-cancel {
+            margin-top: 1rem;
+            width: 100%;
+            padding: 0.75rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            color: var(--text-light);
+        }
+
+        .modal-cancel:hover {
+            background: var(--cream);
+        }
+
+        .export-success {
+            color: var(--accent);
+            font-weight: 600;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        /* Main */
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2.5rem 3rem;
+        }
+
+        /* Instructions */
+        .instructions {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-rich) 100%);
+            color: var(--white);
+            padding: 2rem 2.5rem;
+            border-radius: 20px;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px var(--shadow-deep);
+        }
+
+        .instructions::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(201,169,98,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .instructions h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .instructions ol {
+            margin-left: 1.5rem;
+            line-height: 2;
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+
+        .instructions strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .instructions .subtitle {
+            margin-top: 1.25rem;
+            padding: 1rem 1.25rem;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            border-left: 3px solid var(--gold);
+        }
+
+        .instructions .subtitle strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1100px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card */
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 8px 40px var(--shadow);
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-rich) 100%);
+            color: var(--white);
+            padding: 1.25rem 1.75rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card-header .sub {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .card-body {
+            padding: 1.75rem;
+        }
+
+        /* Month Navigation */
+        .month-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .month-nav button {
+            background: var(--cream);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--primary);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .month-nav button:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .month-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Calendar Grid */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+        }
+
+        .weekday {
+            text-align: center;
+            padding: 0.75rem;
+            font-weight: 600;
+            font-size: 0.7rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .day {
+            min-height: 75px;
+            background: var(--cream);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 0.5rem;
+            border: 2px solid transparent;
+        }
+
+        .day:hover:not(.disabled):not(.weekend) {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .day.disabled {
+            background: var(--cream-warm);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .day.weekend {
+            background: #EAEAEA;
+            cursor: default;
+        }
+
+        .day.past {
+            background: #F0F0F0;
+            cursor: not-allowed;
+        }
+
+        .day.today {
+            border: 2px solid var(--accent);
+        }
+
+        .day.selected {
+            background: var(--accent);
+        }
+
+        .day.selected .day-number {
+            color: var(--white);
+        }
+
+        .day-number {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.35rem;
+            color: var(--primary);
+        }
+
+        /* Booking chips */
+        .booking-chip {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            margin-bottom: 2px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .booking-chip.middle {
+            background: var(--middle);
+            color: white;
+        }
+
+        .booking-chip.high {
+            background: var(--high);
+            color: white;
+        }
+
+        .booking-chip.overlap {
+            background: var(--conflict);
+            color: white;
+        }
+
+        .day.selected .booking-chip {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .more-bookings {
+            font-size: 0.6rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .day.selected .more-bookings {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Calendar legend */
+        .calendar-legend {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .legend-dot.middle { background: var(--middle); }
+        .legend-dot.high { background: var(--high); }
+        .legend-dot.overlap { background: var(--conflict); }
+
+        /* Time Slots */
+        .time-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .time-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .selected-date {
+            background: var(--cream);
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .time-btn {
+            padding: 0.75rem 0.5rem;
+            background: var(--cream);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.15s;
+            line-height: 1.4;
+        }
+
+        .time-btn:hover:not(.booked) {
+            border-color: var(--accent);
+            background: var(--mint-light);
+        }
+
+        .time-btn.selected {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .time-btn .period-name {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 0.15rem;
+        }
+
+        .time-btn .time-range {
+            font-size: 0.65rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        .time-btn.booked {
+            cursor: pointer;
+        }
+
+        .time-btn.booked.middle {
+            background: var(--middle-light);
+            border-color: var(--middle);
+            color: var(--middle);
+        }
+
+        .time-btn.booked.high {
+            background: var(--high-light);
+            border-color: var(--high);
+            color: var(--high);
+        }
+
+        .time-btn.booked.overlap {
+            background: var(--conflict-light);
+            border-color: var(--conflict);
+            color: var(--conflict);
+        }
+
+        .time-btn.booked.tech {
+            background: #FFF3E0;
+            border-color: #E65100;
+            color: #E65100;
+        }
+
+        .booking-chip.tech {
+            background: #E65100;
+            color: white;
+        }
+
+        .booking-item.tech {
+            border-left-color: #E65100;
+            background: #FFF3E0;
+        }
+
+        .time-btn.booked .booking-info {
+            display: block;
+            font-size: 0.7rem;
+            margin-top: 0.25rem;
+            font-weight: 700;
+        }
+
+        .time-btn .overlap-warning {
+            display: block;
+            background: var(--conflict);
+            color: white;
+            padding: 0.2rem 0.3rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-top: 0.25rem;
+        }
+
+        /* Booking Form */
+        .booking-form {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .booking-form input {
+            width: 100%;
+            padding: 0.9rem 1.1rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            transition: all 0.2s;
+            background: var(--cream);
+        }
+
+        .booking-form input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--white);
+        }
+
+        .booking-form input::placeholder {
+            color: var(--text-light);
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .book-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow-deep);
+        }
+
+        .book-btn:disabled {
+            background: #CCC;
+            cursor: not-allowed;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Booking List */
+        .booking-list {
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .booking-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--cream);
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid var(--accent);
+            transition: all 0.2s;
+        }
+
+        .booking-item:hover {
+            background: var(--cream-warm);
+        }
+
+        .booking-item.middle { border-left-color: var(--middle); }
+        .booking-item.high { border-left-color: var(--high); }
+        .booking-item.overlap { border-left-color: var(--conflict); background: var(--conflict-light); }
+
+        .booking-date {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .booking-date .month {
+            font-size: 0.6rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .booking-date .day {
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: transparent;
+            color: white;
+            padding: 0;
+        }
+
+        .booking-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .booking-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .booking-info .badge {
+            font-size: 0.6rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .booking-info .badge.middle { background: var(--middle-light); color: var(--middle); }
+        .booking-info .badge.high { background: var(--high-light); color: var(--high); }
+        .booking-info .badge.tech { background: #FFF3E0; color: #E65100; }
+        .booking-info .badge.overlap { background: var(--conflict-light); color: var(--conflict); }
+
+        .booking-info p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .booking-info .time {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .booking-info .prep {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.2rem;
+            font-style: italic;
+        }
+
+        .cancel-btn {
+            background: transparent;
+            border: 1px solid var(--conflict);
+            color: var(--conflict);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.15s;
+            flex-shrink: 0;
+        }
+
+        .cancel-btn:hover {
+            background: var(--conflict);
+            color: white;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat {
+            background: var(--cream);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-value.middle { color: var(--middle); }
+        .stat-value.high { color: var(--high); }
+        .stat-value.tech { color: #E65100; }
+        .stat-value.overlap { color: var(--conflict); }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Reflection */
+        .reflection-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .reflection-item {
+            background: var(--cream);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .reflection-item .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .reflection-item .author {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+
+        .reflection-item .time {
+            font-size: 0.7rem;
+            color: var(--text-light);
+        }
+
+        .reflection-item .content {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        .reflection-item .actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .reflection-item .edit-btn,
+        .reflection-item .delete-btn {
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s;
+        }
+
+        .reflection-item .edit-btn {
+            background: var(--accent);
+            color: white;
+        }
+
+        .reflection-item .delete-btn {
+            background: var(--conflict);
+            color: white;
+        }
+
+        .reflection-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .reflection-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            resize: vertical;
+            min-height: 80px;
+            background: var(--cream);
+        }
+
+        .reflection-form textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--white);
+        }
+
+        .reflection-form button {
+            padding: 0.75rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .reflection-form button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--shadow-deep);
+        }
+
+        .reflection-note {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-align: center;
+            padding: 0.5rem;
+            background: var(--cream);
+            border-radius: 8px;
+            margin-top: 0.5rem;
+        }
+
+        /* Login */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, var(--primary) 50%, var(--primary-rich) 100%);
+        }
+
+        .login-box {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+
+        .login-box h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-box .tagline {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow-deep);
+        }
+
+        .demo-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .demo-section p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .demo-btns {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .demo-btn {
+            flex: 1;
+            padding: 0.85rem;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            transition: all 0.15s;
+        }
+
+        .demo-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .demo-btn small {
+            display: block;
+            font-size: 0.65rem;
+            color: var(--text-light);
+            margin-top: 0.2rem;
+        }
+
+        .demo-btn:hover small {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 10px 40px var(--shadow-deep);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success { background: var(--accent); }
+        .toast.error { background: var(--conflict); }
+
+        .hidden { display: none !important; }
+        .empty-state { text-align: center; padding: 2rem; color: var(--text-light); font-size: 0.9rem; }
+
+        /* Admin booking list style */
+        .admin-booking-item {
+            background: var(--cream);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-booking-item.middle { border-left: 4px solid var(--middle); }
+        .admin-booking-item.high { border-left: 4px solid var(--high); }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--cream);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Login Page -->
+        <div id="loginPage" class="login-container">
+            <div class="login-box">
+                <img src="https://minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com/ccv2%2F2026-05-14%2FMiniMax-M2.7%2F2042660957552910690%2F162bcbd52330a7879fe72f4927a4815ba83781b3a88e8f518ef3298f54422c1e..png?Expires=1778830393&OSSAccessKeyId=LTAI5tGLnRTkBjLuYPjNcKQ8&Signature=yJ%2F1yB3NfKmpFws8F%2BY5%2B5exFss%3D" alt="BWYADT Logo" style="width: 100px; height: 100px; object-fit: contain; margin-bottom: 1.5rem;">
+                <h1 class="serif" style="font-size: 1.1rem;">DT Technician Booking</h1>
+                <form id="loginForm">
+                    <input type="text" id="nameInput" placeholder="Enter your name" required>
+                    <button type="submit" class="login-btn">🌱 Enter 🌿</button>
+                </form>
+                <div class="demo-section">
+                    <p>✨ Quick access ✨</p>
+                    <div class="demo-btns">
+                        <button class="demo-btn" onclick="demoLogin('Middle School')">
+                            Middle School
+                            <small>Teacher</small>
+                        </button>
+                        <button class="demo-btn" onclick="demoLogin('High School')">
+                            High School
+                            <small>Teacher</small>
+                        </button>
+                        <button class="demo-btn" onclick="demoLogin('Tech')">
+                            Tech
+                            <small>DT Technician</small>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="mainApp" class="hidden">
+            <header class="header">
+                <div class="logo">
+                    <div class="logo-emblem">
+                        <img src="https://minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com/ccv2%2F2026-05-14%2FMiniMax-M2.7%2F2042660957552910690%2F162bcbd52330a7879fe72f4927a4815ba83781b3a88e8f518ef3298f54422c1e..png?Expires=1778830393&OSSAccessKeyId=LTAI5tGLnRTkBjLuYPjNcKQ8&Signature=yJ%2F1yB3NfKmpFws8F%2BY5%2B5exFss%3D" alt="BWYADT">
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="serif">Woodenden Workshop</h1>
+                        <span>DT Booking System</span>
+                    </div>
+                </div>
+                <div class="header-user">
+                    <div class="user-badge">
+                        <span class="name" id="displayName">Teacher</span>
+                        <span class="role" id="displayRole">Role</span>
+                    </div>
+                    <button class="export-btn hidden" id="exportBtn" onclick="showExportMenu()">📥 Export</button>
+                    <button class="logout-btn" onclick="logout()">🍂 Logout</button>
+                </div>
+            </header>
+
+            <main class="main">
+                <div class="instructions">
+                    <h2 class="serif">🌿 How to Book 🪴</h2>
+                    <ol>
+                        <li>🌸 <strong>Select a date</strong> — Click on a day in the calendar</li>
+                        <li>🌻 <strong>Select the block</strong> — Choose your time slot</li>
+                        <li>📚 <strong>Write your class name</strong> — Enter your class (e.g. 9A, 10B)</li>
+                        <li>✨ <strong>Add preparation</strong> — Optional notes for the session</li>
+                        <li>🌟 <strong>Click Book</strong> — Confirm your booking</li>
+                    </ol>
+                    <div class="subtitle">
+                        🌈 <strong>Mixture View:</strong> All teachers can see all bookings. 🟢 Middle | 🔵 High | 🟠 Tech | 🔴 Overlap time
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <span>🌿 Book a Session 🍀</span>
+                            <span class="sub" id="periodInfo"></span>
+                        </div>
+                        <div class="card-body">
+                            <div class="month-nav">
+                                <button onclick="changeMonth(-1)">←</button>
+                                <span class="month-title" id="monthTitle">May 2026</span>
+                                <button onclick="changeMonth(1)">→</button>
+                            </div>
+
+                            <div class="calendar" id="calendarGrid"></div>
+
+                            <div class="calendar-legend">
+                                <div class="legend-item"><div class="legend-dot middle"></div> Middle</div>
+                                <div class="legend-item"><div class="legend-dot high"></div> High</div>
+                                <div class="legend-item"><div class="legend-dot" style="background: #E65100;"></div> Tech</div>
+                                <div class="legend-item"><div class="legend-dot overlap"></div> Overlap</div>
+                            </div>
+
+                            <div class="time-section">
+                                <h3 id="timeSectionTitle">⏰ Select Block 🌼</h3>
+                                <div class="selected-date" id="selectedDateDisplay">Please select a date</div>
+                                <div class="time-grid" id="timeGrid"></div>
+                            </div>
+
+                            <div class="booking-form">
+                                <input type="text" id="classInput" placeholder="Class name (e.g. 9A, 10B)">
+                                <input type="text" id="prepInput" placeholder="📝 Preparation notes (optional)">
+                                <button class="book-btn" id="bookBtn" onclick="createBooking()" disabled>🌟 Book Session</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar">
+                        <div class="card">
+                            <div class="card-header">🌸 My Bookings 🌺</div>
+                            <div class="card-body">
+                                <div class="booking-list" id="myBookingsList">
+                                    <div class="empty-state">No bookings yet</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">📊 Statistics 🌈</div>
+                            <div class="card-body">
+                                <div class="stats-grid">
+                                    <div class="stat">
+                                        <div class="stat-value middle" id="totalMiddle">0</div>
+                                        <div class="stat-label">Middle</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-value high" id="totalHigh">0</div>
+                                        <div class="stat-label">High</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-value tech" id="totalTech">0</div>
+                                        <div class="stat-label">Tech</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-value overlap" id="totalOverlap">0</div>
+                                        <div class="stat-label">Overlap</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">💭 Reflection</div>
+                            <div class="card-body">
+                                <div class="reflection-list" id="reflectionList">
+                                    <div class="empty-state">No reflections yet</div>
+                                </div>
+                                <form class="reflection-form" id="reflectionForm" onsubmit="addReflection(event)">
+                                    <textarea id="reflectionInput" placeholder="Write your reflection..." required></textarea>
+                                    <button type="submit">✨ Add Reflection</button>
+                                </form>
+                                <div class="reflection-note" id="reflectionNote"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="modal-overlay hidden" id="exportModal">
+        <div class="modal">
+            <h3>📥 Export Data</h3>
+            <div class="modal-options">
+                <button class="modal-option" onclick="exportBookings()">
+                    <strong>📅 Bookings</strong>
+                    <small>Export all workshop bookings</small>
+                </button>
+                <button class="modal-option" onclick="exportReflections()">
+                    <strong>💭 Reflections</strong>
+                    <small>Export all reflections</small>
+                </button>
+                <button class="modal-option" onclick="exportAll()">
+                    <strong>📊 Full Export</strong>
+                    <small>Export both bookings and reflections</small>
+                </button>
+            </div>
+            <button class="modal-cancel" onclick="closeExportModal()">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        // Time periods
+        const MIDDLE_PERIODS = [
+            { name: 'B1', time: '8:40-9:25' },
+            { name: 'B2', time: '9:30-10:15' },
+            { name: 'B3', time: '10:40-11:25' },
+            { name: 'B4', time: '11:30-12:15' },
+            { name: 'B5', time: '13:15-14:00' },
+            { name: 'B6', time: '14:05-14:50' },
+            { name: 'B7', time: '14:55-15:40' }
+        ];
+
+        const HIGH_PERIODS = [
+            { name: 'B1', time: '8:40-9:40' },
+            { name: 'B2', time: '9:50-10:50' },
+            { name: 'B3', time: '11:00-12:00' },
+            { name: 'B4', time: '12:50-13:40' },
+            { name: 'B5', time: '13:50-14:40' },
+            { name: 'B6', time: '14:50-15:40' }
+        ];
+
+        // State
+        let state = {
+            user: null,
+            userRole: null,
+            currentMonth: new Date(2026, 4, 1),
+            selectedDate: null,
+            selectedPeriodIndex: null,
+            bookings: [],
+            reflections: []
+        };
+
+        // Sample data
+        function initSampleBookings() {
+            state.bookings = [
+                { id: 1, name: 'Middle School', class: '8A', prep: '', date: new Date(2026, 4, 14), type: 'middle', periodIndex: 1, time: '9:30-10:15' },
+                { id: 2, name: 'High School', class: '10A', prep: '', date: new Date(2026, 4, 15), type: 'high', periodIndex: 0, time: '8:40-9:40' },
+            ];
+        }
+
+        // Helpers
+        function detectRole(name) {
+            const lower = name.toLowerCase();
+            if (lower.includes('middle')) return 'middle';
+            if (lower.includes('high')) return 'high';
+            if (lower.includes('tech')) return 'tech';
+            return 'middle';
+        }
+
+        function getMyPeriods(role) {
+            if (role === 'high') return HIGH_PERIODS;
+            if (role === 'tech') {
+                // Tech can use all periods - combined view
+                return [
+                    { name: 'B1-MS', time: '8:40-9:25' },
+                    { name: 'B2-MS', time: '9:30-10:15' },
+                    { name: 'B3-MS', time: '10:40-11:25' },
+                    { name: 'B4-MS', time: '11:30-12:15' },
+                    { name: 'B5-MS', time: '13:15-14:00' },
+                    { name: 'B6-MS', time: '14:05-14:50' },
+                    { name: 'B7-MS', time: '14:55-15:40' },
+                    { name: 'B1-HS', time: '8:40-9:40' },
+                    { name: 'B2-HS', time: '9:50-10:50' },
+                    { name: 'B3-HS', time: '11:00-12:00' },
+                    { name: 'B4-HS', time: '12:50-13:40' },
+                    { name: 'B5-HS', time: '13:50-14:40' },
+                    { name: 'B6-HS', time: '14:50-15:40' },
+                ];
+            }
+            return MIDDLE_PERIODS;
+        }
+
+        function isPast(date) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            return date < today;
+        }
+
+        function isWeekend(date) {
+            return date.getDay() === 0 || date.getDay() === 6;
+        }
+
+        function getBookingsForDate(date) {
+            return state.bookings.filter(b => b.date.toDateString() === date.toDateString());
+        }
+
+        function getTimeOverlap(time1, time2) {
+            const [start1, end1] = time1.split('-').map(t => {
+                const [h, m] = t.split(':').map(Number);
+                return h * 60 + m;
+            });
+            const [start2, end2] = time2.split('-').map(t => {
+                const [h, m] = t.split(':').map(Number);
+                return h * 60 + m;
+            });
+            const overlapStart = Math.max(start1, start2);
+            const overlapEnd = Math.min(end1, end2);
+            const overlapMinutes = Math.max(0, overlapEnd - overlapStart);
+            return { overlaps: overlapMinutes > 0, minutes: overlapMinutes };
+        }
+
+        function timesOverlap(time1, time2) {
+            return getTimeOverlap(time1, time2).overlaps;
+        }
+
+        function getOverlapType(bookingsOnDate) {
+            for (let i = 0; i < bookingsOnDate.length; i++) {
+                for (let j = i + 1; j < bookingsOnDate.length; j++) {
+                    const b1 = bookingsOnDate[i];
+                    const b2 = bookingsOnDate[j];
+                    if (b1.type !== b2.type) {
+                        const p1 = getPeriodsForType(b1.type)[b1.periodIndex];
+                        const p2 = getPeriodsForType(b2.type)[b2.periodIndex];
+                        if (p1 && p2 && timesOverlap(p1.time, p2.time)) return 'overlap';
+                    }
+                }
+            }
+            const hasTech = bookingsOnDate.some(b => b.type === 'tech');
+            const hasMiddle = bookingsOnDate.some(b => b.type === 'middle');
+            const hasHigh = bookingsOnDate.some(b => b.type === 'high');
+            if (hasTech) return 'tech';
+            if (hasMiddle) return 'middle';
+            if (hasHigh) return 'high';
+            return null;
+        }
+
+        function getPeriodsForType(type) {
+            if (type === 'high') return HIGH_PERIODS;
+            if (type === 'tech') {
+                return [
+                    { name: 'B1-MS', time: '8:40-9:25' },
+                    { name: 'B2-MS', time: '9:30-10:15' },
+                    { name: 'B3-MS', time: '10:40-11:25' },
+                    { name: 'B4-MS', time: '11:30-12:15' },
+                    { name: 'B5-MS', time: '13:15-14:00' },
+                    { name: 'B6-MS', time: '14:05-14:50' },
+                    { name: 'B7-MS', time: '14:55-15:40' },
+                    { name: 'B1-HS', time: '8:40-9:40' },
+                    { name: 'B2-HS', time: '9:50-10:50' },
+                    { name: 'B3-HS', time: '11:00-12:00' },
+                    { name: 'B4-HS', time: '12:50-13:40' },
+                    { name: 'B5-HS', time: '13:50-14:40' },
+                    { name: 'B6-HS', time: '14:50-15:40' },
+                ];
+            }
+            return MIDDLE_PERIODS;
+        }
+
+        function getPeriodName(booking) {
+            const periods = getPeriodsForType(booking.type);
+            return periods[booking.periodIndex] || { name: 'P?', time: '' };
+        }
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('nameInput').value.trim();
+            if (name) login(name);
+        });
+
+        function demoLogin(name) {
+            document.getElementById('nameInput').value = name;
+            login(name);
+        }
+
+        function login(name) {
+            state.user = name;
+            state.userRole = detectRole(name);
+            document.getElementById('displayName').textContent = name;
+            const labels = { middle: 'Middle School', high: 'High School', tech: 'Tech' };
+            document.getElementById('displayRole').textContent = labels[state.userRole];
+            let info = '';
+            if (state.userRole === 'high') info = '6 blocks (B1-B6)';
+            else if (state.userRole === 'tech') info = 'DIY blocks';
+            else info = '7 blocks (B1-B7)';
+            document.getElementById('periodInfo').textContent = info;
+            // Show export button only for Tech role
+            document.getElementById('exportBtn').classList.toggle('hidden', state.userRole !== 'tech');
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            renderAll();
+            showToast(`Welcome, ${name}!`, 'success');
+        }
+
+        function logout() {
+            state.user = null;
+            state.userRole = null;
+            document.getElementById('mainApp').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('nameInput').value = '';
+        }
+
+        // Calendar
+        function renderCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const year = state.currentMonth.getFullYear();
+            const month = state.currentMonth.getMonth();
+
+            document.getElementById('monthTitle').textContent =
+                new Date(year, month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+            const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            let html = weekdays.map(d => `<div class="weekday">${d}</div>`).join('');
+
+            const firstDay = new Date(year, month, 1);
+            const startDay = (firstDay.getDay() + 6) % 7;
+
+            for (let i = 0; i < startDay; i++) {
+                html += '<div class="day disabled"></div>';
+            }
+
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const past = isPast(date);
+                const weekend = isWeekend(date);
+                const isToday = date.toDateString() === today.toDateString();
+                const isSelected = state.selectedDate?.toDateString() === date.toDateString();
+
+                const bookingsOnDate = getBookingsForDate(date);
+                const overlapType = getOverlapType(bookingsOnDate);
+
+                let cls = 'day';
+                if (past) cls += ' past';
+                else if (weekend) cls += ' weekend';
+                else if (isToday) cls += ' today';
+                if (isSelected) cls += ' selected';
+
+                let content = `<div class="day-number">${day}</div>`;
+
+                const visibleBookings = bookingsOnDate.slice(0, 2);
+                visibleBookings.forEach(b => {
+                    const type = overlapType === 'overlap' ? 'overlap' : b.type;
+                    const period = b.type === 'high' ? HIGH_PERIODS[b.periodIndex] : MIDDLE_PERIODS[b.periodIndex];
+                    content += `<div class="booking-chip ${type}">${period.time.split('-')[0]} ${b.class}</div>`;
+                });
+
+                if (bookingsOnDate.length > 2) {
+                    content += `<div class="more-bookings">+${bookingsOnDate.length - 2} more</div>`;
+                }
+
+                const clickHandler = (past || weekend) ? '' : `selectDate(${year}, ${month}, ${day})`;
+                html += `<div class="${cls}" onclick="${clickHandler}">${content}</div>`;
+            }
+
+            grid.innerHTML = html;
+        }
+
+        function changeMonth(delta) {
+            state.currentMonth.setMonth(state.currentMonth.getMonth() + delta);
+            state.selectedDate = null;
+            state.selectedPeriodIndex = null;
+            renderCalendar();
+            renderTimeSlots();
+        }
+
+        function selectDate(year, month, day) {
+            state.selectedDate = new Date(year, month, day);
+            state.selectedPeriodIndex = null;
+            renderCalendar();
+            renderTimeSlots();
+            updateBookButton();
+        }
+
+        // Time slots
+        function renderTimeSlots() {
+            const grid = document.getElementById('timeGrid');
+            const display = document.getElementById('selectedDateDisplay');
+
+            if (!state.selectedDate) {
+                display.textContent = 'Please select a date';
+                grid.innerHTML = '';
+                return;
+            }
+
+            display.textContent = state.selectedDate.toLocaleDateString('en-US', {
+                weekday: 'long', month: 'long', day: 'numeric'
+            });
+
+            const isAdmin = state.userRole === 'admin';
+            const userType = state.userRole === 'high' ? 'high' : 'middle';
+            const bookingsOnDate = getBookingsForDate(state.selectedDate);
+
+            if (isAdmin) {
+                document.getElementById('timeSectionTitle').textContent = '📋 All Bookings';
+                if (bookingsOnDate.length === 0) {
+                    grid.innerHTML = '<div class="empty-state">No bookings on this date</div>';
+                    return;
+                }
+
+                const sorted = [...bookingsOnDate].sort((a, b) => {
+                    const aPeriods = a.type === 'high' ? HIGH_PERIODS : MIDDLE_PERIODS;
+                    const bPeriods = b.type === 'high' ? HIGH_PERIODS : MIDDLE_PERIODS;
+                    const aStart = parseInt(aPeriods[a.periodIndex].time.split('-')[0].replace(':',''));
+                    const bStart = parseInt(bPeriods[b.periodIndex].time.split('-')[0].replace(':',''));
+                    return aStart - bStart;
+                });
+
+                let html = '<div>';
+                sorted.forEach(b => {
+                    const period = b.type === 'high' ? HIGH_PERIODS[b.periodIndex] : MIDDLE_PERIODS[b.periodIndex];
+                    const typeLabel = b.type === 'middle' ? 'MS' : 'HS';
+                    html += `
+                        <div class="admin-booking-item ${b.type}">
+                            <div class="booking-date">
+                                <div class="month">${period.time.split('-')[0]}</div>
+                                <div class="day">${typeLabel}</div>
+                            </div>
+                            <div class="booking-info">
+                                <h4>${b.class}</h4>
+                                <p><span class="time">${period.time}</span> — ${b.name}</p>
+                                ${b.prep ? `<p class="prep">📝 ${b.prep}</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                grid.innerHTML = html;
+                return;
+            } else {
+                document.getElementById('timeSectionTitle').textContent = '⏰ Select Period';
+            }
+
+            const myPeriods = getMyPeriods(state.userRole).map((p, idx) => ({ ...p, periodIndex: idx }));
+
+            let html = '';
+            myPeriods.forEach((period, i) => {
+                const overlappingBookings = bookingsOnDate.filter(b => {
+                    const bPeriods = getPeriodsForType(b.type);
+                    const bPeriod = bPeriods[b.periodIndex];
+                    if (!bPeriod) return false;
+                    return timesOverlap(period.time, bPeriod.time);
+                });
+
+                const hasConflict = overlappingBookings.some(b => b.type !== userType);
+                const isMyBooking = overlappingBookings.some(b => b.name === state.user);
+
+                let overlapTimeStr = null;
+                if (hasConflict) {
+                    const otherBooking = overlappingBookings.find(b => b.type !== userType);
+                    if (otherBooking) {
+                        const otherPeriods = getPeriodsForType(otherBooking.type);
+                        const otherPeriod = otherPeriods[otherBooking.periodIndex];
+                        const overlap = getTimeOverlap(period.time, otherPeriod.time);
+                        if (overlap.overlaps) {
+                            const [s1, e1] = period.time.split('-').map(t => {
+                                const [h, m] = t.split(':').map(Number);
+                                return h * 60 + m;
+                            });
+                            const [s2, e2] = otherPeriod.time.split('-').map(t => {
+                                const [h, m] = t.split(':').map(Number);
+                                return h * 60 + m;
+                            });
+                            const ovStart = Math.max(s1, s2);
+                            const ovEnd = Math.min(e1, e2);
+                            const fmt = m => `${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`;
+                            overlapTimeStr = `${fmt(ovStart)}-${fmt(ovEnd)}`;
+                        }
+                    }
+                }
+
+                let cls = 'time-btn';
+                let content = `<span class="period-name">${period.name}</span><span class="time-range">${period.time}</span>`;
+
+                if (overlappingBookings.length > 0) {
+                    if (overlapTimeStr) {
+                        cls += ' booked overlap';
+                        if (isMyBooking) cls += ' mine';
+                        const classNames = overlappingBookings.map(b => b.class).join(', ');
+                        content += `<span class="booking-info">${classNames}</span>`;
+                        content += `<span class="overlap-warning">⚠️ ${overlapTimeStr}</span>`;
+                    } else {
+                        cls += ' booked ' + userType;
+                        if (isMyBooking) cls += ' mine';
+                        content += `<span class="booking-info">${overlappingBookings[0].class}</span>`;
+                    }
+                }
+
+                html += `<button class="${cls}" onclick="selectTime(${i})">${content}</button>`;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        function selectTime(index) {
+            state.selectedPeriodIndex = index;
+            renderTimeSlots();
+            updateBookButton();
+        }
+
+        function updateBookButton() {
+            const btn = document.getElementById('bookBtn');
+            const cls = document.getElementById('classInput').value.trim();
+            btn.disabled = !state.selectedDate || state.selectedPeriodIndex === null || !cls;
+        }
+
+        document.getElementById('classInput').addEventListener('input', updateBookButton);
+        document.getElementById('prepInput').addEventListener('input', updateBookButton);
+
+        // Booking
+        function createBooking() {
+            const className = document.getElementById('classInput').value.trim();
+            const prep = document.getElementById('prepInput').value.trim();
+
+            if (!state.selectedDate || state.selectedPeriodIndex === null || !className) {
+                showToast('Please enter class name', 'error');
+                return;
+            }
+
+            const myPeriods = getMyPeriods(state.userRole);
+            const myPeriod = myPeriods[state.selectedPeriodIndex];
+            const myType = state.userRole === 'tech' ? 'tech' : (state.userRole === 'high' ? 'high' : 'middle');
+            const bookingsOnDate = getBookingsForDate(state.selectedDate);
+
+            // Find booking periods function based on type
+            const getBookingPeriods = (type) => {
+                if (type === 'tech') return myPeriods;
+                return type === 'high' ? HIGH_PERIODS : MIDDLE_PERIODS;
+            };
+
+            const myBooking = bookingsOnDate.find(b => {
+                if (b.name !== state.user) return false;
+                const bPeriods = getBookingPeriods(b.type);
+                const bPeriod = bPeriods[b.periodIndex];
+                if (!bPeriod) return false;
+                return timesOverlap(myPeriod.time, bPeriod.time);
+            });
+
+            if (myBooking) {
+                myBooking.class = className;
+                myBooking.prep = prep;
+                myBooking.periodIndex = state.selectedPeriodIndex;
+                myBooking.time = myPeriod.time;
+                showToast('Booking updated!', 'success');
+            } else {
+                state.bookings.push({
+                    id: Date.now(),
+                    name: state.user,
+                    class: className,
+                    prep: prep,
+                    date: new Date(state.selectedDate),
+                    periodIndex: state.selectedPeriodIndex,
+                    time: myPeriod.time,
+                    type: myType
+                });
+                showToast('Booking confirmed!', 'success');
+            }
+
+            document.getElementById('classInput').value = '';
+            document.getElementById('prepInput').value = '';
+            state.selectedDate = null;
+            state.selectedPeriodIndex = null;
+
+            renderAll();
+        }
+
+        function cancelBooking(id) {
+            state.bookings = state.bookings.filter(b => b.id !== id);
+            showToast('Booking cancelled', 'success');
+            renderAll();
+        }
+
+        // Render all
+        function renderAll() {
+            renderCalendar();
+            renderTimeSlots();
+            renderMyBookings();
+            renderStats();
+            renderReflections();
+        }
+
+        function renderMyBookings() {
+            const container = document.getElementById('myBookingsList');
+            const mine = state.bookings.filter(b => b.name === state.user);
+
+            if (mine.length === 0) {
+                container.innerHTML = '<div class="empty-state">No bookings yet</div>';
+                return;
+            }
+
+            mine.sort((a, b) => a.date - b.date);
+
+            container.innerHTML = mine.map(b => {
+                const period = getPeriodName(b);
+                const bookingsOnDate = getBookingsForDate(b.date);
+                const overlapType = getOverlapType(bookingsOnDate);
+                const displayType = overlapType === 'overlap' ? 'overlap' : b.type;
+
+                return `
+                <div class="booking-item ${displayType}">
+                    <div class="booking-date">
+                        <div class="month">${b.date.toLocaleDateString('en-US', { month: 'short' })}</div>
+                        <div class="day">${b.date.getDate()}</div>
+                    </div>
+                    <div class="booking-info">
+                        <h4>${b.class} <span class="badge ${displayType}">${period.name}</span></h4>
+                        <p><span class="time">${period.time}</span></p>
+                        ${b.prep ? `<p class="prep">📝 ${b.prep}</p>` : ''}
+                    </div>
+                    <button class="cancel-btn" onclick="cancelBooking(${b.id})">❌ Cancel</button>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function renderStats() {
+            const middle = state.bookings.filter(b => b.type === 'middle').length;
+            const high = state.bookings.filter(b => b.type === 'high').length;
+            const tech = state.bookings.filter(b => b.type === 'tech').length;
+
+            const dateMap = {};
+            state.bookings.forEach(b => {
+                const key = b.date.toDateString();
+                if (!dateMap[key]) dateMap[key] = [];
+                dateMap[key].push(b);
+            });
+
+            let overlap = 0;
+            Object.values(dateMap).forEach(bookingsOnDate => {
+                if (getOverlapType(bookingsOnDate) === 'overlap') overlap++;
+            });
+
+            document.getElementById('totalMiddle').textContent = middle;
+            document.getElementById('totalHigh').textContent = high;
+            document.getElementById('totalTech').textContent = tech;
+            document.getElementById('totalOverlap').textContent = overlap;
+
+            // Update reflection note based on role
+            const note = document.getElementById('reflectionNote');
+            if (state.userRole === 'tech') {
+                note.textContent = 'Tech can edit/delete all reflections';
+            } else {
+                note.textContent = 'You can add reflections';
+            }
+        }
+
+        function renderReflections() {
+            const container = document.getElementById('reflectionList');
+            if (state.reflections.length === 0) {
+                container.innerHTML = '<div class="empty-state">No reflections yet</div>';
+                return;
+            }
+
+            container.innerHTML = state.reflections.map(r => {
+                const date = new Date(r.timestamp);
+                const timeStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' +
+                               date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+                let actions = '';
+                if (state.userRole === 'tech' || r.author === state.user) {
+                    actions = `
+                        <div class="actions">
+                            ${state.userRole === 'tech' ? '<button class="edit-btn" onclick="editReflection(' + r.id + ')">Edit</button>' : ''}
+                            <button class="delete-btn" onclick="deleteReflection(${r.id})">Delete</button>
+                        </div>
+                    `;
+                }
+
+                return `
+                <div class="reflection-item">
+                    <div class="meta">
+                        <span class="author">${r.author}</span>
+                        <span class="time">${timeStr}</span>
+                    </div>
+                    <div class="content">${r.content}</div>
+                    ${actions}
+                </div>
+                `;
+            }).join('');
+        }
+
+        function addReflection(e) {
+            e.preventDefault();
+            const input = document.getElementById('reflectionInput');
+            const content = input.value.trim();
+            if (!content) return;
+
+            state.reflections.push({
+                id: Date.now(),
+                author: state.user,
+                content: content,
+                timestamp: new Date().toISOString()
+            });
+
+            input.value = '';
+            renderReflections();
+            showToast('Reflection added!', 'success');
+        }
+
+        function editReflection(id) {
+            const reflection = state.reflections.find(r => r.id === id);
+            if (!reflection) return;
+
+            const newContent = prompt('Edit reflection:', reflection.content);
+            if (newContent && newContent.trim()) {
+                reflection.content = newContent.trim();
+                renderReflections();
+                showToast('Reflection updated!', 'success');
+            }
+        }
+
+        function deleteReflection(id) {
+            if (confirm('Delete this reflection?')) {
+                state.reflections = state.reflections.filter(r => r.id !== id);
+                renderReflections();
+                showToast('Reflection deleted', 'success');
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Export functions
+        function showExportMenu() {
+            document.getElementById('exportModal').classList.remove('hidden');
+        }
+
+        function closeExportModal() {
+            document.getElementById('exportModal').classList.add('hidden');
+        }
+
+        function exportToCSV(data, filename) {
+            if (data.length === 0) {
+                showToast('No data to export', 'error');
+                return;
+            }
+            const headers = Object.keys(data[0]);
+            const csv = [headers.join(',')];
+            data.forEach(row => {
+                csv.push(headers.map(h => {
+                    let val = row[h];
+                    if (typeof val === 'string' && val.includes(',')) {
+                        val = '"' + val + '"';
+                    }
+                    return val ?? '';
+                }).join(','));
+            });
+            const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Exported successfully!', 'success');
+            closeExportModal();
+        }
+
+        function exportBookings() {
+            const data = state.bookings.map(b => ({
+                Date: b.date.toLocaleDateString('en-US'),
+                'Time Block': b.time,
+                'Period': getPeriodName(b).name,
+                Class: b.class,
+                'Teacher Name': b.name,
+                Type: b.type.charAt(0).toUpperCase() + b.type.slice(1),
+                Prep: b.prep || ''
+            }));
+            exportToCSV(data, 'workshop-bookings.csv');
+        }
+
+        function exportReflections() {
+            const data = state.reflections.map(r => ({
+                Date: new Date(r.timestamp).toLocaleDateString('en-US'),
+                Time: new Date(r.timestamp).toLocaleTimeString('en-US'),
+                Author: r.author,
+                Content: r.content
+            }));
+            exportToCSV(data, 'workshop-reflections.csv');
+        }
+
+        function exportAll() {
+            const bookingData = state.bookings.map(b => ({
+                Type: 'Booking',
+                Date: b.date.toLocaleDateString('en-US'),
+                Time: b.time,
+                'Period/Block': getPeriodName(b).name,
+                Class: b.class,
+                'Teacher Name': b.name,
+                Category: b.type.charAt(0).toUpperCase() + b.type.slice(1),
+                'Prep/Notes': b.prep || '',
+                Author: ''
+            }));
+            const reflectionData = state.reflections.map(r => ({
+                Type: 'Reflection',
+                Date: new Date(r.timestamp).toLocaleDateString('en-US'),
+                Time: new Date(r.timestamp).toLocaleTimeString('en-US'),
+                'Period/Block': '',
+                Class: '',
+                'Teacher Name': '',
+                Category: '',
+                'Prep/Notes': r.content,
+                Author: r.author
+            }));
+            const allData = [...bookingData, ...reflectionData];
+            exportToCSV(allData, 'workshop-full-export.csv');
+        }
+
+        initSampleBookings();
+    </script>
+</body>
+</html>
