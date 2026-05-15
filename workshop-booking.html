@@ -1552,6 +1552,8 @@
             else if (state.userRole === 'tech') info = 'DIY blocks';
             else info = '7 blocks (B1-B7)';
             document.getElementById('periodInfo').textContent = info;
+            // Show export button only for Tech role
+            document.getElementById('exportBtn').classList.toggle('hidden', state.userRole !== 'tech');
             document.getElementById('loginPage').classList.add('hidden');
             document.getElementById('mainApp').classList.remove('hidden');
             renderAll();
