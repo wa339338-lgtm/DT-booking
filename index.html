@@ -50,7 +50,6 @@
             font-family: 'Playfair Display', serif;
         }
 
-        /* Texture overlay */
         body::before {
             content: '';
             position: fixed;
@@ -64,7 +63,6 @@
             z-index: 9999;
         }
 
-        /* Header */
         .header {
             background: linear-gradient(180deg, var(--primary-deep) 0%, var(--primary) 50%, var(--primary-rich) 100%);
             padding: 0 3rem;
@@ -178,7 +176,7 @@
             border-color: rgba(255,255,255,0.4);
         }
 
-        .export-btn {
+        .export-btn, .manage-users-btn {
             background: var(--gold);
             border: none;
             color: var(--primary-deep);
@@ -191,12 +189,11 @@
             transition: all 0.2s;
         }
 
-        .export-btn:hover {
+        .export-btn:hover, .manage-users-btn:hover {
             background: var(--gold-light);
             transform: translateY(-1px);
         }
 
-        /* Export Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -216,6 +213,8 @@
             border-radius: 16px;
             width: 400px;
             max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .modal h3 {
@@ -280,14 +279,12 @@
             padding: 1rem;
         }
 
-        /* Main */
         .main {
             max-width: 1400px;
             margin: 0 auto;
             padding: 2.5rem 3rem;
         }
 
-        /* Instructions */
         .instructions {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-rich) 100%);
             color: var(--white);
@@ -349,7 +346,6 @@
             margin-bottom: 0.25rem;
         }
 
-        /* Dashboard Grid */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 400px;
@@ -362,7 +358,6 @@
             }
         }
 
-        /* Card */
         .card {
             background: var(--white);
             border-radius: 20px;
@@ -395,7 +390,6 @@
             padding: 1.75rem;
         }
 
-        /* Month Navigation */
         .month-nav {
             display: flex;
             justify-content: space-between;
@@ -430,7 +424,6 @@
             color: var(--primary);
         }
 
-        /* Calendar Grid */
         .calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -501,7 +494,6 @@
             color: var(--primary);
         }
 
-        /* Booking chips */
         .booking-chip {
             font-size: 0.65rem;
             padding: 0.2rem 0.4rem;
@@ -542,7 +534,6 @@
             color: rgba(255,255,255,0.7);
         }
 
-        /* Calendar legend */
         .calendar-legend {
             display: flex;
             gap: 1.5rem;
@@ -570,7 +561,6 @@
         .legend-dot.high { background: var(--high); }
         .legend-dot.overlap { background: var(--conflict); }
 
-        /* Time Slots */
         .time-section {
             margin-top: 2rem;
             padding-top: 2rem;
@@ -693,7 +683,6 @@
             margin-top: 0.25rem;
         }
 
-        /* Booking Form */
         .booking-form {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
@@ -748,14 +737,12 @@
             cursor: not-allowed;
         }
 
-        /* Sidebar */
         .sidebar {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
 
-        /* Booking List */
         .booking-list {
             max-height: 280px;
             overflow-y: auto;
@@ -865,7 +852,6 @@
             color: white;
         }
 
-        /* Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -899,7 +885,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Reflection */
         .reflection-list {
             max-height: 300px;
             overflow-y: auto;
@@ -1019,7 +1004,6 @@
             margin-top: 0.5rem;
         }
 
-        /* Login */
         .login-container {
             min-height: 100vh;
             display: flex;
@@ -1067,6 +1051,17 @@
         .login-box input:focus {
             outline: none;
             border-color: var(--accent);
+        }
+
+        .login-box input[type="password"] {
+            margin-bottom: 0.5rem;
+        }
+
+        .login-error {
+            color: var(--conflict);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
         }
 
         .login-btn {
@@ -1135,7 +1130,6 @@
             color: rgba(255,255,255,0.8);
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 2rem;
@@ -1163,7 +1157,6 @@
         .hidden { display: none !important; }
         .empty-state { text-align: center; padding: 2rem; color: var(--text-light); font-size: 0.9rem; }
 
-        /* Admin booking list style */
         .admin-booking-item {
             background: var(--cream);
             border-radius: 12px;
@@ -1177,7 +1170,6 @@
         .admin-booking-item.middle { border-left: 4px solid var(--middle); }
         .admin-booking-item.high { border-left: 4px solid var(--high); }
 
-        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -1194,17 +1186,220 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--text-light);
         }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(13, 43, 26, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+        }
+
+        .loading-box {
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .loading-box h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--cream);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* User Management Modal */
+        .user-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background: var(--cream);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .user-item.middle { border-left-color: var(--middle); }
+        .user-item.high { border-left-color: var(--high); }
+        .user-item.tech { border-left-color: #E65100; }
+
+        .user-item-info {
+            text-align: left;
+        }
+
+        .user-item-info strong {
+            display: block;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .user-item-info span {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .user-item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .user-item-actions button {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s;
+        }
+
+        .user-item-actions .edit-btn {
+            background: var(--accent);
+            color: white;
+        }
+
+        .user-item-actions .delete-btn {
+            background: var(--conflict);
+            color: white;
+        }
+
+        .add-user-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .add-user-form input,
+        .add-user-form select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: var(--cream);
+        }
+
+        .add-user-form input:focus,
+        .add-user-form select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--white);
+        }
+
+        .add-user-form button {
+            padding: 0.75rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-user-form button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--shadow-deep);
+        }
+
+        .change-password-form {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .change-password-form h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .change-password-form input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            background: var(--cream);
+        }
+
+        .change-password-form input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--white);
+        }
+
+        .change-password-form button {
+            padding: 0.6rem 1rem;
+            background: var(--gold);
+            color: var(--primary-deep);
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .change-password-form button:hover {
+            background: var(--gold-light);
+        }
     </style>
 </head>
 <body>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-box">
+            <h3>Connecting to Cloud...</h3>
+            <div class="spinner"></div>
+            <p style="color: var(--text-light);">Syncing your data</p>
+        </div>
+    </div>
+
     <div id="app">
         <!-- Login Page -->
         <div id="loginPage" class="login-container">
             <div class="login-box">
                 <img src="https://minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com/ccv2%2F2026-05-18%2FMiniMax-M2.7%2F2042660957552910690%2F7ca5a02d61f5a7d1db62109e67eb2ece416a09da8057be5959ce5a5d2e656582..jpeg?Expires=1779152108&OSSAccessKeyId=LTAI5tGLnRTkBjLuYPjNcKQ8&Signature=EmVaPpPDa9VVREMDaA00f%2FmJSrs%3D" alt="BWYADT Logo" style="width: 120px; height: 120px; object-fit: contain; margin-bottom: 1.5rem; border-radius: 16px;">
                 <h1 class="serif" style="font-size: 1.1rem;">DT Technician Booking</h1>
+                <p class="login-error hidden" id="loginError"></p>
                 <form id="loginForm">
                     <input type="text" id="nameInput" placeholder="Enter your name" required>
+                    <input type="password" id="passwordInput" placeholder="Password" required>
                     <button type="submit" class="login-btn">🌱 Enter 🌿</button>
                 </form>
                 <div class="demo-section">
@@ -1245,6 +1440,7 @@
                         <span class="name" id="displayName">Teacher</span>
                         <span class="role" id="displayRole">Role</span>
                     </div>
+                    <button class="manage-users-btn hidden" id="manageUsersBtn" onclick="showUserManagement()">👥 Users</button>
                     <button class="export-btn hidden" id="exportBtn" onclick="showExportMenu()">📥 Export</button>
                     <button class="logout-btn" onclick="logout()">🍂 Logout</button>
                 </div>
@@ -1252,7 +1448,7 @@
 
             <main class="main">
                 <div class="instructions">
-                    <h2 class="serif">🌿 How to Book 🪴</h2>
+                    <h2 class="serif">🌿 How to Book Room R102 🪴</h2>
                     <ol>
                         <li>🌸 <strong>Select a date</strong> — Click on a day in the calendar</li>
                         <li>🌻 <strong>Select the block</strong> — Choose your time slot</li>
@@ -1377,138 +1573,82 @@
         </div>
     </div>
 
+    <div class="modal-overlay hidden" id="userManagementModal">
+        <div class="modal">
+            <h3>👥 User Management</h3>
+            <div class="user-list" id="userList"></div>
+            <div class="add-user-form">
+                <h4 style="font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 0.5rem;">Add New User</h4>
+                <input type="text" id="newUserName" placeholder="User name">
+                <input type="password" id="newUserPassword" placeholder="Password">
+                <select id="newUserRole">
+                    <option value="middle">Middle School</option>
+                    <option value="high">High School</option>
+                    <option value="tech">Tech</option>
+                </select>
+                <button onclick="addNewUser()">➕ Add User</button>
+            </div>
+            <div class="change-password-form">
+                <h4>🔑 Change Default Password</h4>
+                <input type="password" id="currentPassword" placeholder="Current password">
+                <input type="password" id="newPassword" placeholder="New password">
+                <button onclick="changeDefaultPassword()">Update Password</button>
+            </div>
+            <button class="modal-cancel" onclick="closeUserManagement()">Close</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+        import { getFirestore, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCMgRoV7x5aeQmHTyFArPDWMOhclum-Huw",
+            authDomain: "an-na-791c6.firebaseapp.com",
+            projectId: "an-na-791c6",
+            storageBucket: "an-na-791c6.firebasestorage.app",
+            messagingSenderId: "242937720093",
+            appId: "1:242937720093:web:ff6e83fb342ed95b15c5f4",
+            measurementId: "G-QF5EZJXMYM"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Enable offline persistence
+        enableIndexedDbPersistence(db).catch((err) => {
+            if (err.code === 'failed-precondition') {
+                console.log('Persistence failed: multiple tabs open');
+            } else if (err.code === 'unimplemented') {
+                console.log('Persistence not available');
+            }
+        });
+
+        // Export to global scope
+        window.firebaseDb = db;
+        window.firebaseLoaded = true;
+
+        // Notify app that Firebase is ready
+        window.dispatchEvent(new Event('firebaseReady'));
+    </script>
+
     <script>
-        // STORAGE - IndexedDB (works with file:// protocol) with localStorage fallback
-        const STORAGE_KEY = 'bwyadt_workshop_v5';
-        let db = null;
+        // Wait for Firebase to initialize
+        let firebaseReady = false;
 
-        // IndexedDB storage - works with file:// protocol
-        function initDB() {
-            return new Promise((resolve, reject) => {
-                const request = indexedDB.open('BWYADT_Workshop', 1);
-                request.onerror = () => reject(request.error);
-                request.onsuccess = () => { db = request.result; resolve(db); };
-                request.onupgradeneeded = (e) => {
-                    const database = e.target.result;
-                    if (!database.objectStoreNames.contains('data')) {
-                        database.createObjectStore('data', { keyPath: 'id' });
-                    }
-                };
-            });
+        window.addEventListener('firebaseReady', () => {
+            firebaseReady = true;
+        });
+
+        if (window.firebaseLoaded) {
+            firebaseReady = true;
         }
 
-        function saveData(data) {
-            return new Promise((resolve, reject) => {
-                const saveObj = { id: STORAGE_KEY, bookings: data.bookings, reflections: data.reflections, timestamp: Date.now() };
-
-                // Try IndexedDB first
-                if (db) {
-                    const tx = db.transaction('data', 'readwrite');
-                    const store = tx.objectStore('data');
-                    const request = store.put(saveObj);
-                    request.onsuccess = () => {
-                        // Also try localStorage for cross-tab sync
-                        try {
-                            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-                        } catch (e) {}
-                        updateSaveStatus('Saved', true);
-                        console.log('SAVED (IndexedDB):', JSON.stringify(data));
-                        resolve(true);
-                    };
-                    request.onerror = () => {
-                        // Fallback to localStorage
-                        try {
-                            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-                            updateSaveStatus('Saved', true);
-                            resolve(true);
-                        } catch (e) {
-                            updateSaveStatus('Save failed!', false);
-                            reject(e);
-                        }
-                    };
-                } else {
-                    // Fallback to localStorage
-                    try {
-                        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-                        updateSaveStatus('Saved', true);
-                        console.log('SAVED (localStorage):', JSON.stringify(data));
-                        resolve(true);
-                    } catch (e) {
-                        updateSaveStatus('Save failed!', false);
-                        reject(e);
-                    }
-                }
-            });
-        }
-
-        function loadData() {
-            return new Promise((resolve, reject) => {
-                // Try IndexedDB first
-                if (db) {
-                    const tx = db.transaction('data', 'readonly');
-                    const store = tx.objectStore('data');
-                    const request = store.get(STORAGE_KEY);
-                    request.onsuccess = () => {
-                        if (request.result) {
-                            console.log('LOADED (IndexedDB):', JSON.stringify(request.result));
-                            resolve({ bookings: request.result.bookings || [], reflections: request.result.reflections || [] });
-                        } else {
-                            // Try localStorage
-                            loadFromLocalStorage(resolve, reject);
-                        }
-                    };
-                    request.onerror = () => {
-                        loadFromLocalStorage(resolve, reject);
-                    };
-                } else {
-                    loadFromLocalStorage(resolve, reject);
-                }
-            });
-        }
-
-        function loadFromLocalStorage(resolve, reject) {
-            try {
-                const data = localStorage.getItem(STORAGE_KEY);
-                if (data) {
-                    console.log('LOADED (localStorage):', data);
-                    resolve(JSON.parse(data));
-                } else {
-                    console.log('NO DATA FOUND');
-                    resolve({ bookings: [], reflections: [] });
-                }
-            } catch (e) {
-                console.error('LOAD ERROR:', e);
-                resolve({ bookings: [], reflections: [] });
-            }
-        }
-
-        function updateSaveStatus(text, success) {
-            const el = document.getElementById('saveStatus');
-            if (el) {
-                el.textContent = text;
-                el.style.color = success ? '#90EE90' : '#FF6B6B';
-            }
-        }
-
-        // Time periods
-        const MIDDLE_PERIODS = [
-            { name: 'B1', time: '8:40-9:25' },
-            { name: 'B2', time: '9:30-10:15' },
-            { name: 'B3', time: '10:40-11:25' },
-            { name: 'B4', time: '11:30-12:15' },
-            { name: 'B5', time: '13:15-14:00' },
-            { name: 'B6', time: '14:05-14:50' },
-            { name: 'B7', time: '14:55-15:40' }
-        ];
-
-        const HIGH_PERIODS = [
-            { name: 'B1', time: '8:40-9:40' },
-            { name: 'B2', time: '9:50-10:50' },
-            { name: 'B3', time: '11:00-12:00' },
-            { name: 'B4', time: '12:50-13:40' },
-            { name: 'B5', time: '13:50-14:40' },
-            { name: 'B6', time: '14:50-15:40' }
-        ];
+        // Default password
+        const DEFAULT_PASSWORD = 'bwya';
 
         // State
         let state = {
@@ -1518,7 +1658,9 @@
             selectedDate: null,
             selectedPeriodIndex: null,
             bookings: [],
-            reflections: []
+            reflections: [],
+            customUsers: [],
+            defaultPassword: DEFAULT_PASSWORD
         };
 
         // Sample data
@@ -1541,7 +1683,6 @@
         function getMyPeriods(role) {
             if (role === 'high') return HIGH_PERIODS;
             if (role === 'tech') {
-                // Tech can use all periods - combined view
                 return [
                     { name: 'B1-MS', time: '8:40-9:25' },
                     { name: 'B2-MS', time: '9:30-10:15' },
@@ -1642,22 +1783,249 @@
             return periods[booking.periodIndex] || { name: 'P?', time: '' };
         }
 
+        // Time periods
+        const MIDDLE_PERIODS = [
+            { name: 'B1', time: '8:40-9:25' },
+            { name: 'B2', time: '9:30-10:15' },
+            { name: 'B3', time: '10:40-11:25' },
+            { name: 'B4', time: '11:30-12:15' },
+            { name: 'B5', time: '13:15-14:00' },
+            { name: 'B6', time: '14:05-14:50' },
+            { name: 'B7', time: '14:55-15:40' }
+        ];
+
+        const HIGH_PERIODS = [
+            { name: 'B1', time: '8:40-9:40' },
+            { name: 'B2', time: '9:50-10:50' },
+            { name: 'B3', time: '11:00-12:00' },
+            { name: 'B4', time: '12:50-13:40' },
+            { name: 'B5', time: '13:50-14:40' },
+            { name: 'B6', time: '14:50-15:40' }
+        ];
+
+        // Firebase Firestore functions
+        async function loadData() {
+            if (!window.firebaseDb) return;
+
+            try {
+                // Load bookings
+                const bookingsSnapshot = await window.firebaseDb.collection('bookings').get();
+                state.bookings = [];
+                bookingsSnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    state.bookings.push({
+                        id: data.id || doc.id,
+                        name: data.name,
+                        class: data.class,
+                        prep: data.prep || '',
+                        date: data.date ? new Date(data.date) : new Date(),
+                        type: data.type,
+                        periodIndex: data.periodIndex,
+                        time: data.time
+                    });
+                });
+
+                // Load reflections
+                const reflectionsSnapshot = await window.firebaseDb.collection('reflections').get();
+                state.reflections = [];
+                reflectionsSnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    state.reflections.push({
+                        id: data.id || doc.id,
+                        author: data.author,
+                        content: data.content,
+                        timestamp: data.timestamp
+                    });
+                });
+
+                // Load custom users
+                const usersSnapshot = await window.firebaseDb.collection('users').get();
+                state.customUsers = [];
+                usersSnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    state.customUsers.push({
+                        id: data.id || doc.id,
+                        name: data.name,
+                        password: data.password,
+                        role: data.role
+                    });
+                });
+
+                // Load settings
+                const settingsSnapshot = await window.firebaseDb.collection('settings').get();
+                settingsSnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (data.key === 'defaultPassword') {
+                        state.defaultPassword = data.value;
+                    }
+                });
+
+                console.log('Loaded from Firebase:', state.bookings.length, 'bookings', state.reflections.length, 'reflections', state.customUsers.length, 'users');
+
+                if (state.user) {
+                    renderAll();
+                }
+            } catch (e) {
+                console.error('Error loading data:', e);
+            }
+        }
+
+        async function saveData(data) {
+            if (!window.firebaseDb) return false;
+
+            try {
+                // Save all bookings
+                const bookingsRef = window.firebaseDb.collection('bookings');
+                const existingBookings = await bookingsRef.get();
+                const batch = window.firebaseDb.batch();
+                existingBookings.forEach((doc) => {
+                    batch.delete(doc.ref);
+                });
+                data.bookings.forEach((booking) => {
+                    const docRef = bookingsRef.doc(booking.id.toString());
+                    batch.set(docRef, {
+                        id: booking.id,
+                        name: booking.name,
+                        class: booking.class,
+                        prep: booking.prep || '',
+                        date: booking.date.toISOString(),
+                        type: booking.type,
+                        periodIndex: booking.periodIndex,
+                        time: booking.time
+                    });
+                });
+                await batch.commit();
+
+                // Save all reflections
+                const reflectionsRef = window.firebaseDb.collection('reflections');
+                const existingReflections = await reflectionsRef.get();
+                const batch2 = window.firebaseDb.batch();
+                existingReflections.forEach((doc) => {
+                    batch2.delete(doc.ref);
+                });
+                data.reflections.forEach((reflection) => {
+                    const docRef = reflectionsRef.doc(reflection.id.toString());
+                    batch2.set(docRef, {
+                        id: reflection.id,
+                        author: reflection.author,
+                        content: reflection.content,
+                        timestamp: reflection.timestamp
+                    });
+                });
+                await batch2.commit();
+
+                updateSaveStatus('Saved', true);
+                console.log('Saved to Firebase');
+                return true;
+            } catch (e) {
+                console.error('Error saving data:', e);
+                updateSaveStatus('Save failed!', false);
+                return false;
+            }
+        }
+
+        async function saveUsers() {
+            if (!window.firebaseDb) return false;
+
+            try {
+                const usersRef = window.firebaseDb.collection('users');
+                const existingUsers = await usersRef.get();
+                const batch = window.firebaseDb.batch();
+                existingUsers.forEach((doc) => {
+                    batch.delete(doc.ref);
+                });
+                state.customUsers.forEach((user) => {
+                    const docRef = usersRef.doc(user.id.toString());
+                    batch.set(docRef, {
+                        id: user.id,
+                        name: user.name,
+                        password: user.password,
+                        role: user.role
+                    });
+                });
+                await batch.commit();
+                return true;
+            } catch (e) {
+                console.error('Error saving users:', e);
+                return false;
+            }
+        }
+
+        async function saveDefaultPassword(password) {
+            if (!window.firebaseDb) return false;
+
+            try {
+                const settingsRef = window.firebaseDb.collection('settings');
+                const batch = window.firebaseDb.batch();
+                // Delete existing settings
+                const existingSettings = await settingsRef.get();
+                existingSettings.forEach((doc) => {
+                    batch.delete(doc.ref);
+                });
+                // Add new password
+                const passwordRef = settingsRef.doc('defaultPassword');
+                batch.set(passwordRef, {
+                    key: 'defaultPassword',
+                    value: password
+                });
+                await batch.commit();
+                return true;
+            } catch (e) {
+                console.error('Error saving password:', e);
+                return false;
+            }
+        }
+
+        function updateSaveStatus(text, success) {
+            const el = document.getElementById('saveStatus');
+            if (el) {
+                el.textContent = text;
+                el.style.color = success ? '#90EE90' : '#FF6B6B';
+            }
+        }
+
         // Login
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('nameInput').value.trim();
-            if (name) login(name);
+            const password = document.getElementById('passwordInput').value;
+            if (name) login(name, password);
         });
 
         function demoLogin(name) {
             document.getElementById('nameInput').value = name;
-            login(name);
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').focus();
         }
 
-        function login(name) {
-            state.user = name;
-            state.userRole = detectRole(name);
-            document.getElementById('displayName').textContent = name;
+        function login(name, password) {
+            const errorEl = document.getElementById('loginError');
+            errorEl.classList.add('hidden');
+
+            // Check password
+            const user = state.customUsers.find(u => u.name.toLowerCase() === name.toLowerCase());
+
+            if (user) {
+                // Custom user - check their password
+                if (user.password !== password) {
+                    errorEl.textContent = 'Incorrect password!';
+                    errorEl.classList.remove('hidden');
+                    return;
+                }
+                state.user = user.name;
+                state.userRole = user.role;
+            } else {
+                // Default users (demo) - check default password
+                if (password !== state.defaultPassword) {
+                    errorEl.textContent = 'Incorrect password!';
+                    errorEl.classList.remove('hidden');
+                    return;
+                }
+                state.user = name;
+                state.userRole = detectRole(name);
+            }
+
+            document.getElementById('displayName').textContent = state.user;
             const labels = { middle: 'Middle School', high: 'High School', tech: 'Tech' };
             document.getElementById('displayRole').textContent = labels[state.userRole];
             let info = '';
@@ -1665,12 +2033,13 @@
             else if (state.userRole === 'tech') info = 'DIY blocks';
             else info = '7 blocks (B1-B7)';
             document.getElementById('periodInfo').textContent = info;
-            // Show export button only for Tech role
+            // Show buttons based on role
             document.getElementById('exportBtn').classList.toggle('hidden', state.userRole !== 'tech');
+            document.getElementById('manageUsersBtn').classList.toggle('hidden', state.userRole !== 'tech');
             document.getElementById('loginPage').classList.add('hidden');
             document.getElementById('mainApp').classList.remove('hidden');
             renderAll();
-            showToast(`Welcome, ${name}!`, 'success');
+            showToast(`Welcome, ${state.user}!`, 'success');
         }
 
         function logout() {
@@ -1679,6 +2048,119 @@
             document.getElementById('mainApp').classList.add('hidden');
             document.getElementById('loginPage').classList.remove('hidden');
             document.getElementById('nameInput').value = '';
+            document.getElementById('passwordInput').value = '';
+        }
+
+        // User Management
+        function showUserManagement() {
+            renderUserList();
+            document.getElementById('userManagementModal').classList.remove('hidden');
+        }
+
+        function closeUserManagement() {
+            document.getElementById('userManagementModal').classList.add('hidden');
+        }
+
+        function renderUserList() {
+            const container = document.getElementById('userList');
+            const roleLabels = { middle: 'Middle School', high: 'High School', tech: 'Tech' };
+
+            if (state.customUsers.length === 0) {
+                container.innerHTML = '<div class="empty-state">No custom users yet</div>';
+                return;
+            }
+
+            container.innerHTML = state.customUsers.map(u => `
+                <div class="user-item ${u.role}">
+                    <div class="user-item-info">
+                        <strong>${u.name}</strong>
+                        <span>${roleLabels[u.role]} | Password: ${u.password}</span>
+                    </div>
+                    <div class="user-item-actions">
+                        <button class="edit-btn" onclick="editUser(${u.id})">Edit</button>
+                        <button class="delete-btn" onclick="deleteUser(${u.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function addNewUser() {
+            const name = document.getElementById('newUserName').value.trim();
+            const password = document.getElementById('newUserPassword').value;
+            const role = document.getElementById('newUserRole').value;
+
+            if (!name || !password) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            // Check if user already exists
+            if (state.customUsers.some(u => u.name.toLowerCase() === name.toLowerCase())) {
+                showToast('User already exists!', 'error');
+                return;
+            }
+
+            state.customUsers.push({
+                id: Date.now(),
+                name: name,
+                password: password,
+                role: role
+            });
+
+            await saveUsers();
+            document.getElementById('newUserName').value = '';
+            document.getElementById('newUserPassword').value = '';
+            renderUserList();
+            showToast('User added!', 'success');
+        }
+
+        async function editUser(id) {
+            const user = state.customUsers.find(u => u.id === id);
+            if (!user) return;
+
+            const newName = prompt('Edit user name:', user.name);
+            if (!newName || !newName.trim()) return;
+
+            const newPassword = prompt('Edit password (leave empty to keep current):', '');
+
+            user.name = newName.trim();
+            if (newPassword) {
+                user.password = newPassword;
+            }
+
+            await saveUsers();
+            renderUserList();
+            showToast('User updated!', 'success');
+        }
+
+        async function deleteUser(id) {
+            if (!confirm('Delete this user?')) return;
+
+            state.customUsers = state.customUsers.filter(u => u.id !== id);
+            await saveUsers();
+            renderUserList();
+            showToast('User deleted!', 'success');
+        }
+
+        async function changeDefaultPassword() {
+            const currentPwd = document.getElementById('currentPassword').value;
+            const newPwd = document.getElementById('newPassword').value;
+
+            if (currentPwd !== state.defaultPassword) {
+                showToast('Current password is incorrect!', 'error');
+                return;
+            }
+
+            if (!newPwd || newPwd.length < 3) {
+                showToast('New password must be at least 3 characters!', 'error');
+                return;
+            }
+
+            state.defaultPassword = newPwd;
+            await saveDefaultPassword(newPwd);
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            showToast('Default password changed!', 'success');
         }
 
         // Calendar
@@ -1906,7 +2388,6 @@
             const myType = state.userRole === 'tech' ? 'tech' : (state.userRole === 'high' ? 'high' : 'middle');
             const bookingsOnDate = getBookingsForDate(state.selectedDate);
 
-            // Find booking periods function based on type
             const getBookingPeriods = (type) => {
                 if (type === 'tech') return myPeriods;
                 return type === 'high' ? HIGH_PERIODS : MIDDLE_PERIODS;
@@ -2022,7 +2503,6 @@
             document.getElementById('totalTech').textContent = tech;
             document.getElementById('totalOverlap').textContent = overlap;
 
-            // Update reflection note based on role
             const note = document.getElementById('reflectionNote');
             if (state.userRole === 'tech') {
                 note.textContent = 'Tech can edit/delete all reflections';
@@ -2200,25 +2680,111 @@
             exportToCSV(allData, 'workshop-full-export.csv');
         }
 
+        // Real-time listener for Firestore
+        function setupRealtimeListener() {
+            if (!window.firebaseDb) return;
+
+            window.firebaseDb.collection('bookings').onSnapshot((snapshot) => {
+                console.log('Bookings updated from cloud');
+                const newBookings = [];
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    newBookings.push({
+                        id: data.id || doc.id,
+                        name: data.name,
+                        class: data.class,
+                        prep: data.prep || '',
+                        date: data.date ? new Date(data.date) : new Date(),
+                        type: data.type,
+                        periodIndex: data.periodIndex,
+                        time: data.time
+                    });
+                });
+                state.bookings = newBookings;
+                if (state.user) {
+                    renderCalendar();
+                    renderTimeSlots();
+                    renderMyBookings();
+                    renderStats();
+                }
+            }, (error) => {
+                console.error('Error listening to bookings:', error);
+            });
+
+            window.firebaseDb.collection('reflections').onSnapshot((snapshot) => {
+                console.log('Reflections updated from cloud');
+                const newReflections = [];
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    newReflections.push({
+                        id: data.id || doc.id,
+                        author: data.author,
+                        content: data.content,
+                        timestamp: data.timestamp
+                    });
+                });
+                state.reflections = newReflections;
+                if (state.user) {
+                    renderReflections();
+                }
+            }, (error) => {
+                console.error('Error listening to reflections:', error);
+            });
+
+            window.firebaseDb.collection('users').onSnapshot((snapshot) => {
+                console.log('Users updated from cloud');
+                const newUsers = [];
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    newUsers.push({
+                        id: data.id || doc.id,
+                        name: data.name,
+                        password: data.password,
+                        role: data.role
+                    });
+                });
+                state.customUsers = newUsers;
+            }, (error) => {
+                console.error('Error listening to users:', error);
+            });
+
+            window.firebaseDb.collection('settings').onSnapshot((snapshot) => {
+                console.log('Settings updated from cloud');
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (data.key === 'defaultPassword') {
+                        state.defaultPassword = data.value;
+                    }
+                });
+            }, (error) => {
+                console.error('Error listening to settings:', error);
+            });
+        }
+
         // Init
         async function init() {
-            try {
-                await initDB();
-                const data = await loadData();
-                state.bookings = data.bookings || [];
-                state.reflections = data.reflections || [];
-                console.log('INIT: loaded', state.bookings.length, 'bookings');
-            } catch (e) {
-                console.log('IndexedDB failed, falling back');
-                try {
-                    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"bookings":[],"reflections":[]}');
-                    state.bookings = data.bookings || [];
-                    state.reflections = data.reflections || [];
-                } catch (e2) {
-                    state.bookings = [];
-                    state.reflections = [];
-                }
+            const waitForFirebase = () => {
+                return new Promise((resolve) => {
+                    if (window.firebaseLoaded) {
+                        resolve();
+                    } else {
+                        window.addEventListener('firebaseReady', resolve);
+                        setTimeout(resolve, 10000);
+                    }
+                });
+            };
+
+            await waitForFirebase();
+
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'none';
             }
+
+            await loadData();
+            setupRealtimeListener();
+
+            console.log('App initialized with', state.bookings.length, 'bookings and', state.reflections.length, 'reflections');
         }
 
         init();
