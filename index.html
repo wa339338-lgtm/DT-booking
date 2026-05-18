@@ -1874,16 +1874,14 @@
             if (!window.firebaseDb) return false;
 
             try {
-                // Save all bookings
+                // Save bookings one by one
                 const bookingsRef = window.firebaseDb.collection('bookings');
                 const existingBookings = await bookingsRef.get();
-                const batch = window.firebaseDb.batch();
-                existingBookings.forEach((doc) => {
-                    batch.delete(doc.ref);
-                });
-                data.bookings.forEach((booking) => {
-                    const docRef = bookingsRef.doc(booking.id.toString());
-                    batch.set(docRef, {
+                for (const doc of existingBookings.docs) {
+                    await doc.ref.delete();
+                }
+                for (const booking of data.bookings) {
+                    await bookingsRef.doc(booking.id.toString()).set({
                         id: booking.id,
                         name: booking.name,
                         class: booking.class,
@@ -1893,26 +1891,22 @@
                         periodIndex: booking.periodIndex,
                         time: booking.time
                     });
-                });
-                await batch.commit();
+                }
 
-                // Save all reflections
+                // Save reflections one by one
                 const reflectionsRef = window.firebaseDb.collection('reflections');
                 const existingReflections = await reflectionsRef.get();
-                const batch2 = window.firebaseDb.batch();
-                existingReflections.forEach((doc) => {
-                    batch2.delete(doc.ref);
-                });
-                data.reflections.forEach((reflection) => {
-                    const docRef = reflectionsRef.doc(reflection.id.toString());
-                    batch2.set(docRef, {
+                for (const doc of existingReflections.docs) {
+                    await doc.ref.delete();
+                }
+                for (const reflection of data.reflections) {
+                    await reflectionsRef.doc(reflection.id.toString()).set({
                         id: reflection.id,
                         author: reflection.author,
                         content: reflection.content,
                         timestamp: reflection.timestamp
                     });
-                });
-                await batch2.commit();
+                }
 
                 updateSaveStatus('Saved', true);
                 console.log('Saved to Firebase');
