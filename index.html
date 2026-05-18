@@ -1201,7 +1201,7 @@
         <!-- Login Page -->
         <div id="loginPage" class="login-container">
             <div class="login-box">
-                <img src="https://minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com/ccv2%2F2026-05-14%2FMiniMax-M2.7%2F2042660957552910690%2F162bcbd52330a7879fe72f4927a4815ba83781b3a88e8f518ef3298f54422c1e..png?Expires=1778830393&OSSAccessKeyId=LTAI5tGLnRTkBjLuYPjNcKQ8&Signature=yJ%2F1yB3NfKmpFws8F%2BY5%2B5exFss%3D" alt="BWYADT Logo" style="width: 100px; height: 100px; object-fit: contain; margin-bottom: 1.5rem;">
+                <img src="https://minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com/ccv2%2F2026-05-18%2FMiniMax-M2.7%2F2042660957552910690%2F7ca5a02d61f5a7d1db62109e67eb2ece416a09da8057be5959ce5a5d2e656582..jpeg?Expires=1779152108&OSSAccessKeyId=LTAI5tGLnRTkBjLuYPjNcKQ8&Signature=EmVaPpPDa9VVREMDaA00f%2FmJSrs%3D" alt="BWYADT Logo" style="width: 120px; height: 120px; object-fit: contain; margin-bottom: 1.5rem; border-radius: 16px;">
                 <h1 class="serif" style="font-size: 1.1rem;">DT Technician Booking</h1>
                 <form id="loginForm">
                     <input type="text" id="nameInput" placeholder="Enter your name" required>
@@ -1232,14 +1232,15 @@
             <header class="header">
                 <div class="logo">
                     <div class="logo-emblem">
-                        <img src="https://minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com/ccv2%2F2026-05-14%2FMiniMax-M2.7%2F2042660957552910690%2F162bcbd52330a7879fe72f4927a4815ba83781b3a88e8f518ef3298f54422c1e..png?Expires=1778830393&OSSAccessKeyId=LTAI5tGLnRTkBjLuYPjNcKQ8&Signature=yJ%2F1yB3NfKmpFws8F%2BY5%2B5exFss%3D" alt="BWYADT">
+                        <img src="https://minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com/ccv2%2F2026-05-18%2FMiniMax-M2.7%2F2042660957552910690%2F7ca5a02d61f5a7d1db62109e67eb2ece416a09da8057be5959ce5a5d2e656582..jpeg?Expires=1779152108&OSSAccessKeyId=LTAI5tGLnRTkBjLuYPjNcKQ8&Signature=EmVaPpPDa9VVREMDaA00f%2FmJSrs%3D" alt="BWYADT">
                     </div>
                     <div class="logo-text">
                         <h1 class="serif">Woodenden Workshop</h1>
-                        <span>DT Booking System</span>
+                        <span>DT Booking System 💗</span>
                     </div>
                 </div>
                 <div class="header-user">
+                    <div id="saveStatus" style="color: #90EE90; font-size: 0.8rem; margin-right: 1rem;"></div>
                     <div class="user-badge">
                         <span class="name" id="displayName">Teacher</span>
                         <span class="role" id="displayRole">Role</span>
@@ -1377,6 +1378,118 @@
     </div>
 
     <script>
+        // STORAGE - IndexedDB (works with file:// protocol) with localStorage fallback
+        const STORAGE_KEY = 'bwyadt_workshop_v5';
+        let db = null;
+
+        // IndexedDB storage - works with file:// protocol
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open('BWYADT_Workshop', 1);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => { db = request.result; resolve(db); };
+                request.onupgradeneeded = (e) => {
+                    const database = e.target.result;
+                    if (!database.objectStoreNames.contains('data')) {
+                        database.createObjectStore('data', { keyPath: 'id' });
+                    }
+                };
+            });
+        }
+
+        function saveData(data) {
+            return new Promise((resolve, reject) => {
+                const saveObj = { id: STORAGE_KEY, bookings: data.bookings, reflections: data.reflections, timestamp: Date.now() };
+
+                // Try IndexedDB first
+                if (db) {
+                    const tx = db.transaction('data', 'readwrite');
+                    const store = tx.objectStore('data');
+                    const request = store.put(saveObj);
+                    request.onsuccess = () => {
+                        // Also try localStorage for cross-tab sync
+                        try {
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                        } catch (e) {}
+                        updateSaveStatus('Saved', true);
+                        console.log('SAVED (IndexedDB):', JSON.stringify(data));
+                        resolve(true);
+                    };
+                    request.onerror = () => {
+                        // Fallback to localStorage
+                        try {
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                            updateSaveStatus('Saved', true);
+                            resolve(true);
+                        } catch (e) {
+                            updateSaveStatus('Save failed!', false);
+                            reject(e);
+                        }
+                    };
+                } else {
+                    // Fallback to localStorage
+                    try {
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                        updateSaveStatus('Saved', true);
+                        console.log('SAVED (localStorage):', JSON.stringify(data));
+                        resolve(true);
+                    } catch (e) {
+                        updateSaveStatus('Save failed!', false);
+                        reject(e);
+                    }
+                }
+            });
+        }
+
+        function loadData() {
+            return new Promise((resolve, reject) => {
+                // Try IndexedDB first
+                if (db) {
+                    const tx = db.transaction('data', 'readonly');
+                    const store = tx.objectStore('data');
+                    const request = store.get(STORAGE_KEY);
+                    request.onsuccess = () => {
+                        if (request.result) {
+                            console.log('LOADED (IndexedDB):', JSON.stringify(request.result));
+                            resolve({ bookings: request.result.bookings || [], reflections: request.result.reflections || [] });
+                        } else {
+                            // Try localStorage
+                            loadFromLocalStorage(resolve, reject);
+                        }
+                    };
+                    request.onerror = () => {
+                        loadFromLocalStorage(resolve, reject);
+                    };
+                } else {
+                    loadFromLocalStorage(resolve, reject);
+                }
+            });
+        }
+
+        function loadFromLocalStorage(resolve, reject) {
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                if (data) {
+                    console.log('LOADED (localStorage):', data);
+                    resolve(JSON.parse(data));
+                } else {
+                    console.log('NO DATA FOUND');
+                    resolve({ bookings: [], reflections: [] });
+                }
+            } catch (e) {
+                console.error('LOAD ERROR:', e);
+                resolve({ bookings: [], reflections: [] });
+            }
+        }
+
+        function updateSaveStatus(text, success) {
+            const el = document.getElementById('saveStatus');
+            if (el) {
+                el.textContent = text;
+                el.style.color = success ? '#90EE90' : '#FF6B6B';
+            }
+        }
+
         // Time periods
         const MIDDLE_PERIODS = [
             { name: 'B1', time: '8:40-9:25' },
@@ -1779,7 +1892,7 @@
         document.getElementById('prepInput').addEventListener('input', updateBookButton);
 
         // Booking
-        function createBooking() {
+        async function createBooking() {
             const className = document.getElementById('classInput').value.trim();
             const prep = document.getElementById('prepInput').value.trim();
 
@@ -1827,6 +1940,8 @@
                 showToast('Booking confirmed!', 'success');
             }
 
+            await saveData({ bookings: state.bookings, reflections: state.reflections });
+
             document.getElementById('classInput').value = '';
             document.getElementById('prepInput').value = '';
             state.selectedDate = null;
@@ -1835,8 +1950,9 @@
             renderAll();
         }
 
-        function cancelBooking(id) {
+        async function cancelBooking(id) {
             state.bookings = state.bookings.filter(b => b.id !== id);
+            await saveData({ bookings: state.bookings, reflections: state.reflections });
             showToast('Booking cancelled', 'success');
             renderAll();
         }
@@ -1950,7 +2066,7 @@
             }).join('');
         }
 
-        function addReflection(e) {
+        async function addReflection(e) {
             e.preventDefault();
             const input = document.getElementById('reflectionInput');
             const content = input.value.trim();
@@ -1963,26 +2079,29 @@
                 timestamp: new Date().toISOString()
             });
 
+            await saveData({ bookings: state.bookings, reflections: state.reflections });
             input.value = '';
             renderReflections();
             showToast('Reflection added!', 'success');
         }
 
-        function editReflection(id) {
+        async function editReflection(id) {
             const reflection = state.reflections.find(r => r.id === id);
             if (!reflection) return;
 
             const newContent = prompt('Edit reflection:', reflection.content);
             if (newContent && newContent.trim()) {
                 reflection.content = newContent.trim();
+                await saveData({ bookings: state.bookings, reflections: state.reflections });
                 renderReflections();
                 showToast('Reflection updated!', 'success');
             }
         }
 
-        function deleteReflection(id) {
+        async function deleteReflection(id) {
             if (confirm('Delete this reflection?')) {
                 state.reflections = state.reflections.filter(r => r.id !== id);
+                await saveData({ bookings: state.bookings, reflections: state.reflections });
                 renderReflections();
                 showToast('Reflection deleted', 'success');
             }
@@ -2081,7 +2200,28 @@
             exportToCSV(allData, 'workshop-full-export.csv');
         }
 
-        initSampleBookings();
+        // Init
+        async function init() {
+            try {
+                await initDB();
+                const data = await loadData();
+                state.bookings = data.bookings || [];
+                state.reflections = data.reflections || [];
+                console.log('INIT: loaded', state.bookings.length, 'bookings');
+            } catch (e) {
+                console.log('IndexedDB failed, falling back');
+                try {
+                    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"bookings":[],"reflections":[]}');
+                    state.bookings = data.bookings || [];
+                    state.reflections = data.reflections || [];
+                } catch (e2) {
+                    state.bookings = [];
+                    state.reflections = [];
+                }
+            }
+        }
+
+        init();
     </script>
 </body>
 </html>
